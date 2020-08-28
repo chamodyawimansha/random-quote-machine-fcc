@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    quoteBody: "",
+    quoteAuthor: "",
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await fetch("https://quote-api.glitch.me/pull/1");
+      const data = await response.json();
+      this.setState({
+        quoteBody: data[0].body,
+        quoteAuthor: data[0].author,
+      });
+    } catch (err) {
+      console.log("API Error" + err);
+    }
+  }
+
+  render() {
+    return (
+      <div className="h-100 row align-items-center">
+        <div className="">
+          <h1>{this.state.quoteBody}</h1>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
