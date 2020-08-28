@@ -1,12 +1,23 @@
 import React, { Component } from "react";
 
 class App extends Component {
-  state = {
-    quoteBody: "",
-    quoteAuthor: "",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      quoteBody: "",
+      quoteAuthor: "",
+      backgroundColor: "",
+    };
+
+    this.getRandomQuote = this.getRandomQuote.bind(this);
+  }
 
   async componentDidMount() {
+    this.getRandomQuote();
+  }
+
+  async getRandomQuote() {
     try {
       const response = await fetch("https://quote-api.glitch.me/pull/1");
       const data = await response.json();
@@ -15,9 +26,11 @@ class App extends Component {
         quoteAuthor: data[0].author,
       });
     } catch (err) {
-      console.log("API Error" + err);
+      console.log("API Error = " + err);
     }
   }
+
+  async getRandomColor() {}
 
   render() {
     return (
