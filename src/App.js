@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
 class App extends Component {
+  quoteBoxStyles = {};
+
   constructor(props) {
     super(props);
 
@@ -11,6 +13,7 @@ class App extends Component {
     };
 
     this.getRandomQuote = this.getRandomQuote.bind(this);
+    this.getRandomColor = this.getRandomColor.bind(this);
   }
 
   async componentDidMount() {
@@ -25,18 +28,46 @@ class App extends Component {
         quoteBody: data[0].body,
         quoteAuthor: data[0].author,
       });
+      this.getRandomColor();
     } catch (err) {
       console.log("API Error = " + err);
     }
   }
 
-  async getRandomColor() {}
+  async getRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    this.setState({ backgroundColor: color });
+  }
 
   render() {
     return (
-      <div className="h-100 row align-items-center">
-        <div className="">
-          <h1>{this.state.quoteBody}</h1>
+      <div
+        style={{
+          backgroundColor: this.state.backgroundColor,
+          height: "100vh",
+          transition: "background-color 0.5s ease",
+        }}
+      >
+        <div
+          className=""
+          id="quote-box"
+          style={{
+            backgroundColor: "#FFF",
+          }}
+        >
+          <p id="text">{this.state.quoteBody}</p>
+          <p id="author">{this.state.quoteAuthor}</p>
+          <button
+            id="new-quote"
+            className="btn btn-primary"
+            onClick={this.getRandomQuote}
+          >
+            New Quote
+          </button>
         </div>
       </div>
     );
