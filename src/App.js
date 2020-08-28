@@ -1,8 +1,7 @@
 import React, { Component } from "react";
+import "./app.css";
 
 class App extends Component {
-  quoteBoxStyles = {};
-
   constructor(props) {
     super(props);
 
@@ -46,28 +45,62 @@ class App extends Component {
   render() {
     return (
       <div
+        id="container"
         style={{
           backgroundColor: this.state.backgroundColor,
-          height: "100vh",
-          transition: "background-color 0.5s ease",
         }}
       >
-        <div
-          className=""
-          id="quote-box"
-          style={{
-            backgroundColor: "#FFF",
-          }}
-        >
-          <p id="text">{this.state.quoteBody}</p>
-          <p id="author">{this.state.quoteAuthor}</p>
-          <button
-            id="new-quote"
-            className="btn btn-primary"
-            onClick={this.getRandomQuote}
-          >
-            New Quote
-          </button>
+        <div id="wrapper">
+          <div className="" id="quote-box">
+            <div
+              className="quote-text"
+              style={{ color: this.state.backgroundColor }}
+            >
+              <i className="fa fa-quote-left mr-2"></i>
+              <p id="text">{this.state.quoteBody}</p>
+              <i className="fa fa-quote-right mr-2"></i>
+            </div>
+
+            <div className="quote-author">
+              <p id="author" style={{ color: this.state.backgroundColor }}>
+                {" - " + this.state.quoteAuthor + " - "}
+              </p>
+            </div>
+
+            <div className="buttons">
+              <button
+                id="new-quote"
+                className="btn"
+                style={{
+                  backgroundColor: this.state.backgroundColor,
+                  color: "#fff",
+                }}
+                onClick={this.getRandomQuote}
+              >
+                New Quote
+              </button>
+            </div>
+            <div className="socialLinks">
+              <a
+                className="btn"
+                id="tweet-quote"
+                // title="Tweet¦ this quote!"
+                target="_blank"
+                href={
+                  'https://twitter.com/intent/tweet?hashtags=quotes&text="' +
+                  this.state.quoteBody +
+                  '" ' +
+                  this.state.quoteAuthor
+                }
+                style={{
+                  backgroundColor: this.state.backgroundColor,
+                  color: "#fff",
+                }}
+              >
+                <i class="fa fa-twitter"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );
